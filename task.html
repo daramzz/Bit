@@ -1,0 +1,527 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="utf-8">
+
+		<!-- Always force latest IE rendering engine (even in intranet) & Chrome Frame
+		Remove this if you use the .htaccess -->
+		<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+
+		<title>ex</title>
+		<meta name="description" content="">
+		<meta name="author" content="sec">
+
+		<meta name="viewport" content="width=device-width; initial-scale=1.0">
+
+		<!-- Replace favicon.ico & apple-touch-icon.png in the root of your domain and delete these references -->
+		<link rel="shortcut icon" href="/favicon.ico">
+		<link rel="apple-touch-icon" href="/apple-touch-icon.png">
+
+		<link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.0.0-wip/css/bootstrap.min.css">
+		<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/less.js/2.3.1/less.min.js">
+		<script type="text/javascript" src="http://code.jquery.com/jquery-latest.js"></script>
+		<script src="//netdna.bootstrapcdn.com/bootstrap/3.0.0-wip/js/bootstrap.min.js"></script>
+		<script src="//cdnjs.cloudflare.com/ajax/libs/jqueryui/1.11.2/jquery-ui.min.js"></script>
+
+		<script src="jquery.multiple.select.js"></script>
+
+		<style>
+			* {
+				box-sizing: border-box;
+			}
+			body {
+				background: #FFFFFF;
+				font-family: 'Helvetica Neue', 'Segoe UI', Sans-Serif;
+				padding-top: 40px;
+				padding-left: 30px;
+			}
+			.new {
+				position: absolute;
+				top: 5%;
+				left: 80%;
+				color: white;
+				margin: 0px 0px 0 0;
+				cursor: pointer;
+			}
+			.save {
+				position: absolute;
+				top: 5%;
+				left: 90%;
+			}
+			.new:hover {
+				color: #e67e22;
+			}
+			.addlabel {
+				position: absolute;
+				top: 5%;
+				left: 85%;
+			}
+			.label {
+				position: absolute !important;
+				width: 175px;
+				height: 70px;
+				padding: 0px;
+			}
+			.label .label-content {
+				width: 175px;
+				height: 25px;
+				background: #689470;
+				box-shadow: 3px 3px 5px #aaa;
+				border-radius: 5px;
+			}
+			.card {
+				overflow: hidden;
+				white-space: nowrap;
+				position: absolute !important;
+				width: 175px;
+				height: 110px;
+				border: 5px solid #689470;
+				background: #fccd4c;
+				box-shadow: 3px 3px 5px #aaa;
+				border-radius: 5px;
+			}
+			.card .card-content {
+				overflow: hidden;
+				white-space: nowrap;
+				position: absolute !important;
+				padding: 10px;
+				width: 175px;
+				height: 110px;
+				font-size: .9em;
+				text-overflow: ellipsis;
+			}
+			.card:hover {
+				box-shadow: 3px 3px 5px #999;
+				cursor: pointer;
+			}
+			#edit {
+				position: absolute;
+				right: 0%;
+			}
+			#comment_form {
+				text-align: center;
+			}
+			#comment {
+				width: 80%;
+			}
+			#content_btn_another {
+				position: absolute;
+				right: 8%;
+				top: 5%;
+				width: 62px;
+				height: 26px;
+			}
+			#content_btn {
+				position: absolute;
+				right: 8%;
+				top: 5%;
+				width: 62px;
+				height: 26px;
+			}
+			#myModal, #editModal, #labelModal, #editlabelModal, #TaskModal {
+			}
+		</style>
+
+		<script>
+			/*
+			 $("select").multipleSelect({
+			 width : 460,
+			 multiple : true,
+			 multipleWidth : 55
+			 });
+			 $(document).on('click', '.new', function() {
+			 member = [{
+			 'member' : '김짜증',
+			 'member' : '얼음'
+			 }];
+			 var mem = "";
+			 $.each(member, function(index, item) {
+			 mem += "<option value='" + item.member + "'>" + "<input type='checkbox' value='" + item.member + "'>" + item.member + "</option>";
+			 //mem += "<input type='checkbox' name='chk_info' value='" + item.member + "'>" + item.member;
+			 //chk_info 필드에 선택된 value값이 저장되있음
+			 });
+			 var box = document.getElementById('plz');
+			 box.innerHTML = mem;
+			 //$('memberlist').append(mem);
+			 $('#myModal').modal('show');
+			 });*/
+
+			function showID(id) {
+				obj = document.getElementById('content_btn');
+				obj_a = document.getElementById('content_btn_another');
+				var result = false;
+
+				//if (obj.style.display == "none") {
+				if (result == true){
+					obj_a.style.display = "none";
+					obj.style.display = "inline";
+					result = false;
+					alert(result);
+				} else if (result == false){
+					obj.style.display = "none";
+					obj_a.style.display = "inline";
+					result = true;
+					alert(result);
+				}
+			}
+
+			/*
+			 $(document).ready(function() {
+			 $("toggle_ing").click(function() {
+			 //$("toggle_finish").toggle();
+			 $("toggle_ing").hide();
+			 $("toggle_finish").show();
+			 });
+			 $("toggle_finish").click(function() {
+			 //$("toggle_ing").toggle();
+			 $("toggle_finish").hide();
+			 $("toggle_ing").show();
+			 });
+			 });*/
+
+			$(document).on('click', '.new', function() {
+				var member = new Array();
+				member = ["horse", "cow", "백영빈", "유동구"];
+				var mem = "";
+				id_v = 0;
+				$.each(member, function(index, value) {
+					mem += "<input class='chk' type='checkbox' name='chk_info' value='" + value + "' id='" + id_v + "'>" + value + "&nbsp;&nbsp;";
+					//option_value++;
+					//$("#plz").append($("<option>",{value: value, text: value}));
+					id_v++;
+				});
+				var box = document.getElementById('plz');
+				box.innerHTML = mem;
+
+				$('#myModal').modal('show');
+			});
+
+			prepare();
+			var list = new Array();
+			function prepare() {
+				$(document).ready(function() {
+					p = 0;
+					var text = "";
+					$.each(list, function(index, item) {
+						var com = true;
+						//댓글 업데이트 여부 변수
+
+						text += "<div class ='card' id = '" + p + "'>";
+						text += "<div class='card-content'>";
+						text += "할 일 : " + item.name;
+						text += "<br>담당자 : " + item.handler;
+						if (com) {
+							text += "<br> 댓글" + "<span class = 'badge'>" + "new" + "</span>";
+						}
+						text += "</div></div><p>&nbsp;</p><p>&nbsp;</p><p>&nbsp;</p>";
+						p++;
+					});
+					alert(text);
+					$('body').append(text);
+
+					//list = [];
+					//$0('body').add(text);
+					/*0
+					var content = document.getElementsByClassName("card");
+					content.innerHTML = text;
+					*/
+					//$('.card').innerHTML = this.text;
+					$('.card').draggable({
+						//grid : 190
+					});
+				});
+			}
+
+
+			$(document).on('click', '#my_save_btn', function() {
+				var name = document.getElementById("task_name").value;
+				var start = document.getElementById("task_start").value;
+				if (!start) {
+					var d = new Date();
+					var yyyy = d.getFullYear();
+					var mm = (d.getMonth() + 1);
+					var dd = d.getDate();
+					start = yyyy + "-" + mm + "-" + dd;
+				}
+				var duedate = document.getElementById("task_duedate").value;
+				var handler = document.getElementById("task_handler").value;
+
+				var chkArray = [];
+				$(".chk:checked").each(function() {
+					chkArray.push($(this).val());
+				});
+				var selected;
+				selected = chkArray.join(',');
+				alert(selected);
+
+				var content = document.getElementById("task_content").value;
+				alert(name + "\n" + start + "\n" + duedate + "\n" + handler + "\n" + selected + "\n" + content);
+				list.push({
+					'name' : name,
+					'start' : start,
+					'duedate' : duedate,
+					'handler' : handler,
+					'selected' : selected,
+					'content' : content
+				});
+				$('#myModal').modal('hide');
+				prepare();
+			});
+
+			/////////////////////////////////label//////////////////////////////////////////////////
+			lprepare();
+			var llist = new Array();
+
+			function lprepare() {
+				$(document).ready(function() {
+					lp = 0;
+					var ltext = "";
+					$.each(llist, function(index, item) {
+						ltext += "<div class ='label' id = '" + lp + "'>";
+						ltext += "<div class='label-content'>";
+						ltext += item.lname;
+						ltext += "</div></div><p>&nbsp;</p><p>&nbsp;</p>";
+						lp++;
+					});
+					alert(ltext);
+					$('body').append(ltext);
+
+					llist = [];
+					//$('body').add(text);
+					/*
+					var content = document.getElementsByClassName('label');
+					content.innerHTML = ltext;
+					*/
+					//$('.label').innerHTML = ltext;
+					$('.label').draggable({
+						//grid : [190]
+					});
+				});
+			}
+
+
+			$(document).on('click', '#label_save_btn', function() {
+				var lname = document.getElementById("label_name").value;
+				alert(lname);
+
+				llist.push({
+					'lname' : lname,
+				});
+
+				$('#labelModal').modal('hide');
+				lprepare();
+			});
+			///////////////////////////////card modal///////////////////////////////////////////
+			$(document).on('click', '.card', function() {
+				/*var yes = "";
+				 $.each(list, function(index, item) {
+				 yes += "할 일 : " + item.name;
+				 yes += "<br><br>시작일 : " + item.start;
+				 yes += "<br><br>마감일 : " + item.duedate;
+				 yes += "<br><br>담당자 : " + item.handler;
+				 yes += "<br><br>참여자 : " + item.selected;
+				 yes += "<br><br>내용 : " + item.content;
+				 });
+				 alert(yes);
+				 alert("list내용");
+				 alert(list);
+				 //document.getElementById("dd").innerHTML = yes;
+				 var box = document.getElementById('bb');
+				 //alert('a');
+				 //alert(box);
+				 box.innerHTML = yes;
+				 //$('#bb').append(yes);*/
+				alert('click');
+				$('#editModal').modal('show');
+				//var box = document.getElementById('bb');
+				//box.innerHTML = yes;
+			});
+			////////////////////////////label edit modal/////////////////////////////////////
+			$(document).on('click', '.label', function() {
+				$('#editlabelModal').modal('show');
+			});
+
+		</script>
+	</head>
+
+	<body>
+
+		<button class="new">
+			new
+		</button>
+		<button class="addlabel">
+			<a data-toggle="modal" href="#labelModal" >label</a>
+		</button>
+
+		<!------------------------ modal ------------------>
+		<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+			<div class="modal-dialog">
+				<div class="modal-content">
+					<div class="modal-header">
+						<button type="button" class="close" data-dismiss="modal" aria-hidden="true">
+							&times;
+						</button>
+						<h4 class="modal-title">해야 할 일 추가 하기</h4>
+					</div>
+					<div class="modal-body">
+						<div id="memo_form">
+							업무&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+							<input type="text" id="task_name">
+							<br>
+							<br>
+							시작일&nbsp;&nbsp;
+							<input type="date" id="task_start">
+							<br>
+							<br>
+							마감일&nbsp;&nbsp;
+							<input type="date" id="task_duedate">
+							<br>
+							<br>
+							담당자&nbsp;&nbsp;
+							<input type="text" id="task_handler">
+							<br>
+							<br>
+							참여자
+							<div id="memberlist">
+								<div id="plz" multiple="multiple"></div>
+							</div>
+							<br>
+							<br>
+							메모&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+							<textarea type="text" id="task_content"></textarea>
+							<br>
+						</div>
+					</div>
+					<div>
+						<div class="modal-footer">
+							<button type="button" class="btn btn-default" data-dismiss="modal">
+								닫기
+							</button>
+							<button type="button" id="my_save_btn" class="btn btn-primary" data-dismiss="modal">
+								저장
+							</button>
+						</div>
+					</div>
+				</div><!--/.modal-content-->
+			</div><!--/.modal-dialog-->
+		</div><!--/.modal-->
+
+		<!----------------------label modal------------------>
+		<div class="modal fade" id="labelModal" tabindex="-1" role="dialog" aria-labelledby="labelModalLabel" aria-hidden="true">
+			<div class="modal-dialog">
+				<div class="modal-content">
+					<div class="modal-header">
+						<button type="button" class="close" data-dismiss="modal" aria-hidden="true">
+							&times;
+						</button>
+						<h4 class="modal-title">라벨 추가 하기</h4>
+					</div>
+					<div class="modal-body">
+						<div id="lebel_form">
+							라벨이름
+							<input type="text" id="label_name">
+							<br>
+						</div>
+					</div>
+					<div>
+						<div class="modal-footer">
+							<button type="button" class="btn btn-default" data-dismiss="modal">
+								닫기
+							</button>
+							<button type="button" id="label_save_btn" class="btn btn-primary" data-dismiss="modal">
+								저장
+							</button>
+						</div>
+					</div>
+				</div><!--/.modal-content-->
+			</div><!--/.modal-dialog-->
+		</div><!--/.modal-->
+
+		<!-------------------edit label modal------------------>
+		<div class="modal fade" id="editlabelModal" tabindex="-1" role="dialog" aria-labelledby="editlabelModalLabel" aria-hidden="true">
+			<div class="modal-dialog">
+				<div class="modal-content">
+					<div class="modal-header">
+						<button type="button" class="close" data-dismiss="modal" aria-hidden="true">
+							&times;
+						</button>
+						<h4 class="modal-title">라벨 수정 하기</h4>
+					</div>
+					<div class="modal-body">
+						<div id="lebel_form">
+							라벨이름
+							<input type="text" id="label_name">
+							<br>
+						</div>
+					</div>
+					<div>
+						<div class="modal-footer">
+							<button type="button" class="btn btn-default" data-dismiss="modal">
+								닫기
+							</button>
+							<button type="button" id="label_save_btn" class="btn btn-primary" data-dismiss="modal">
+								저장
+							</button>
+						</div>
+					</div>
+				</div><!--/.modal-content-->
+			</div><!--/.modal-dialog-->
+		</div><!--/.modal-->
+
+		<!--------------------------edit modal--------------------------->
+		<div class="modal fade" id="editModal" tabindex="-1" role="dialog" aria-labelledby="editModalLabel" aria-hidden="true">
+			<div class="modal-dialog">
+				<div class="modal-content">
+					<div class="modal-header">
+						<button type="button" class="close" data-dismiss="modal" aria-hidden="true">
+							&times;
+						</button>
+						<h4 class="modal-title">해야 할 일 수정 하기</h4>
+						<div class="tog_edit">
+							<button type="hidden" id="content_btn">
+								<a href="#" onclick="showID('content_btn_another');">진행중!</a>
+							</button>
+							<button id="content_btn_another">
+								<a href="#" onclick="showID('content_btn');">완료!</a>
+							</button>
+						</div>
+					</div>
+					<div class="modal-body">
+						<div id="memo_form">
+							업무&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+							<input type="text" id="task_name">
+							<br>
+							<br>
+							마감일&nbsp;&nbsp;
+							<input type="date" id="task_duedate">
+							<br>
+							<br>
+							담당자&nbsp;&nbsp;
+							<input type="text" id="task_handler">
+							<br>
+							<br>
+							참여자&nbsp;&nbsp;
+							<div id="memberlist"></div>
+							<br>
+							<br>
+							메모&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+							<textarea type="text" id="task_content"></textarea>
+							<br>
+						</div>
+					</div>
+					<div>
+						<div class="modal-footer">
+							<button type="button" class="btn btn-default" data-dismiss="modal">
+								닫기
+							</button>
+							<button type="button" id="my_save_btn" class="btn btn-primary" data-dismiss="modal">
+								수정
+							</button>
+						</div>
+					</div>
+				</div><!--/.modal-content-->
+			</div><!--/.modal-dialog-->
+		</div><!--/.modal-->
+
+	</body>
+</html>
